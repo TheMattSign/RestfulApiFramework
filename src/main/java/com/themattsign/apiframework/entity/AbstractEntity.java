@@ -7,7 +7,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.time.OffsetDateTime;
+import org.joda.time.DateTime;
 import java.util.UUID;
 
 /**
@@ -26,11 +26,11 @@ public class AbstractEntity implements Cloneable {
 
     @Column(name = "datecreated", nullable = false, updatable = false)
     @CreatedDate
-    private Timestamp dateCreated;
+    private DateTime dateCreated;
 
     @Column(name = "datemodified")
     @LastModifiedDate
-    private Timestamp dateModified;
+    private DateTime dateModified;
 
     public UUID getId() {
         return id;
@@ -40,19 +40,19 @@ public class AbstractEntity implements Cloneable {
         this.id = id;
     }
 
-    public Timestamp getDateCreated() {
+    public DateTime getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(Timestamp dateCreated) {
+    public void setDateCreated(DateTime dateCreated) {
         this.dateCreated = dateCreated;
     }
 
-    public Timestamp getDateModified() {
+    public DateTime getDateModified() {
         return dateModified;
     }
 
-    public void setDateModified(Timestamp dateModified) {
+    public void setDateModified(DateTime dateModified) {
         this.dateModified = dateModified;
     }
 
