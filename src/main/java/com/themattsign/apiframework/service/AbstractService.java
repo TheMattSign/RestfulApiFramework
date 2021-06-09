@@ -125,8 +125,12 @@ public abstract class AbstractService<K extends AbstractModel, V extends Abstrac
      * @return - The logged in users name
      */
     protected String loadLoggedInUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return authentication.getName();
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            return authentication.getName();
+        } catch (Exception e) {
+            return "N/A";
+        }
     }
 
     /**
