@@ -190,6 +190,8 @@ public abstract class AbstractService<K extends AbstractModel, V extends Abstrac
     /**
      * If we need to do any processing after an entity is saved, do it here
      * @param entity - The updated entity
+     * @param model - The model that was used to save
+     * @param action - The action that was performed
      */
     protected void postSaveProcessing(V entity, K model, Actions action) {
         // This provides a place to do any post save processing for adding notifiable events or any other clean up
@@ -199,6 +201,7 @@ public abstract class AbstractService<K extends AbstractModel, V extends Abstrac
      * If we need to and any audit records, do it here
      * @param beforeEntity - The entity before the update
      * @param afterEntity - The entity after the update
+     * @param action - The action the user is performing
      */
     protected void addAuditData(V beforeEntity, V afterEntity, Actions action) {
         // This provides a place to do any auditing if we would want to
