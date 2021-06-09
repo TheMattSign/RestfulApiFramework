@@ -7,7 +7,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import org.joda.time.DateTime;
 import java.util.UUID;
 
 /**
@@ -25,12 +24,14 @@ public class AbstractEntity implements Cloneable {
     private UUID id;
 
     @Column(name = "datecreated", nullable = false, updatable = false)
-    @CreatedDate
-    private DateTime dateCreated;
+    private Timestamp dateCreated;
 
     @Column(name = "datemodified")
-    @LastModifiedDate
-    private DateTime dateModified;
+    private Timestamp dateModified;
+
+    @Column(nullable = false, updatable = false)
+    private String createdUserName;
+    private String modifiedUserName;
 
     public UUID getId() {
         return id;
@@ -40,20 +41,36 @@ public class AbstractEntity implements Cloneable {
         this.id = id;
     }
 
-    public DateTime getDateCreated() {
+    public Timestamp getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(DateTime dateCreated) {
+    public void setDateCreated(Timestamp dateCreated) {
         this.dateCreated = dateCreated;
     }
 
-    public DateTime getDateModified() {
+    public Timestamp getDateModified() {
         return dateModified;
     }
 
-    public void setDateModified(DateTime dateModified) {
+    public void setDateModified(Timestamp dateModified) {
         this.dateModified = dateModified;
+    }
+
+    public String getCreatedUserName() {
+        return createdUserName;
+    }
+
+    public void setCreatedUserName(String createdUserName) {
+        this.createdUserName = createdUserName;
+    }
+
+    public String getModifiedUserName() {
+        return modifiedUserName;
+    }
+
+    public void setModifiedUserName(String modifiedUserName) {
+        this.modifiedUserName = modifiedUserName;
     }
 
     public Object getDeepCopy() {

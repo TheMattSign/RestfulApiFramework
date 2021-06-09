@@ -8,6 +8,7 @@ import org.springframework.data.domain.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -36,6 +37,12 @@ public abstract class AbstractService<K extends AbstractModel, V extends Abstrac
     public UUID add(K model) throws InrangeException {
         preAddCheck(model);
         V entity = convertToEntityForAdd(model);
+
+        entity.setDateCreated(new Timestamp(System.currentTimeMillis()));
+        entity.setDateModified(new Timestamp(System.currentTimeMillis()));
+        entity.setCreatedUserName(loadLoggedInUser());
+        entity.setModifiedUserName(loadLoggedInUser());
+
         V dbEntity = getRepository().save(entity);
 
         postSaveProcessing(dbEntity, model, Actions.CREATE);
@@ -102,7 +109,11 @@ public abstract class AbstractService<K extends AbstractModel, V extends Abstrac
         V beforeEntity = (V)entity.getDeepCopy();
 
         preUpdateCheck(entity, model);
+
         entity = populateEntityForUpdate(entity, model);
+        entity.setDateModified(new Timestamp(System.currentTimeMillis()));
+        entity.setModifiedUserName(loadLoggedInUser());
+
         V dbEntity = getRepository().save(entity);
 
         postSaveProcessing(dbEntity, model, Actions.UPDATE);
